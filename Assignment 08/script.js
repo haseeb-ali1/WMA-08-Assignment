@@ -19,7 +19,7 @@ function max(num1, num2, num3){
         return num3;
     }
 }
-console.log("The max number is: " + maxax(10, 20, 30));
+console.log("The max number is: " + max(10, 20, 30));
 //3. Write a js program to check whether a number is negative, positive or zero.
 function number(num){
     if (num > 0) {
