@@ -65,7 +65,7 @@ function leap(year){
         return "Not a Leap Year";
     }
 }
-console.log(leapeap(2020));
+console.log(leap(2020));
 //7. Write a js program to check whether a character is alphabet or not.
 function character(char){
     if ((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')) {
