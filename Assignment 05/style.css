@@ -1,0 +1,282 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "Josefin Sans", serif;
+}
+.hero nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-left: 12%;
+    padding-right: 10%;
+    background-color: rgb(42, 74, 161);
+    padding-bottom: 20px;
+    font-weight: bold;
+    
+}
+.hero nav ul li{
+    display: inline-block;
+    list-style-type: none;
+    padding-top: 8px;
+
+}
+.hero li a{
+    text-decoration:none;
+    padding-left: 20px;
+    font-size:15px ;
+    color: white;
+}
+.hero a:hover{
+    cursor: pointer;
+    font-size: 20px;
+    text-decoration: underline;
+}
+
+.searchbar{
+   /* width: 20%;
+    max-width: 200px;*/
+    border-radius: 60px;
+    background-color: white;
+}
+.searchbar input{
+    background-color: transparent;
+    border: 0;
+    outline: none;
+    padding: 2px 2px 2px 8px;
+    font-size: 20px;
+    color: rgb(42, 74, 161);
+}
+.searchbar button{
+    border: 0;
+    border-radius: 30px;
+    display: inline;
+    padding-right: 10px;
+    background: transparent;
+}
+.submit img{
+    height: 30px;
+    padding-right:px;
+    background: transparent;
+    padding-bottom: 5px;
+    border-radius: 50%;
+    
+}
+.section{
+
+    color: white;
+    background-color: rgb(42, 74, 161);
+    padding: 70px 50% 80px 12%;
+}
+.section .h1{
+    max-width: 2%;
+    margin: 0;
+    font-size:70px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    font-weight: bold;
+}
+.section p{
+    color: white;
+    background-color: rgb(42, 74, 161);
+    padding-bottom: 20px;
+}
+.section button{
+    border: none;
+    background: rgb(76, 76, 236);
+    color: white;
+    padding: 12px 12px;
+    border-radius: 30px;
+   background-color: rgb(76, 76, 236);
+}
+section2{
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.section2 h3{
+    color: blue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2%;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.section2 h2{
+    padding-top: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;   
+}
+.container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 15px;
+    padding: 15px 9%;
+    padding-bottom: 100px;
+    padding: 30px 30px;
+}
+.container .box{
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.315);
+    border-radius: 10px;
+    text-align: center;
+    background:rgba(128, 128, 128, 0.644);
+    padding: 30px 30px;
+}
+.container .box img{
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 35%;
+    
+}
+.container .box h3{
+    color: black;
+
+}
+.container :hover{
+    box-shadow: 0 10px 15px rgba(255, 254, 254, 0);
+    transform: scale(1.03);
+    background: white;
+}
+@media(max-width:768px){
+    .container{
+        padding: 20px;
+    }
+}
+.section3{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 2fr));
+    gap: 5px;
+    padding: 15px 9%;
+    padding-bottom: 100px;
+    margin-top: 80px
+}
+.text{
+    padding-top: 60px;
+    padding-bottom: 70px;
+}
+.section3 h3{
+    color:rgb(42, 74, 161); 
+}
+.section3 button{
+    border: none;
+    background: rgb(76, 76, 236);
+    color: white;
+    padding: 12px 12px;
+    border-radius: 30px;
+}
+.section3 img{
+    height: 400px;
+}
+.section4 {
+    padding: 60px 60px;
+    background-color:rgb(42, 74, 161);
+    text-align: center;
+    color: white;
+}
+.card1{
+    display: grid;
+    grid-template-columns: 500px 500px;
+     gap: 100px;
+    padding: 20px 10%;
+    background-color:rgb(42, 74, 161);
+    color: white;
+    text-align: center;
+    padding-bottom: 60px;
+}
+.card1 h4{
+    font-size:20px;
+}
+.card1 h5{
+    font-size: 13px;
+}
+.card1 :hover{
+    background:#4454f3;  
+}
+.container3{
+    display: grid;
+    grid-template-columns: 300px 300px 300px;
+    column-gap: 100px;
+    background:white;
+    padding: 10px 5px;
+    text-align: center;
+    box-shadow: gainsboro;
+}
+.section5{
+    margin-top: 7%;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding: 15px 9%;
+}
+.container3 .box{
+    border-radius: 10px;
+    text-align: center;
+    background:ghostwhite;
+    padding: 20px 20px;
+    
+}
+.container3 .box:hover{
+    box-shadow: 0 10px 15px rgba(190, 190, 190, 0);
+    transform: scale(1.03);
+    background: gainsboro;
+}
+.h4{
+    font-size: 20px;
+    color: blue;
+    padding-bottom: 20px;
+}
+.h2{
+    padding-bottom: 20px;
+}
+.container3 img{
+    height: 100px;
+}
+.container3 ul li{
+    list-style: none;
+}
+span{
+    font-size: 15px;
+}
+.section5 button{
+    border: none;
+    background: rgb(76, 76, 236);
+    color: white;
+    padding: 12px 12px;
+    border-radius: 30px;
+   background-color: rgb(76, 76, 236);  
+}
+
+ul li{
+    list-style: none;
+}
+.section6{
+    display:grid;
+    grid-template-columns: 250px 200px 200px 200px ;
+    gap: 90px;
+    padding: 40px 10%;
+    margin-top: 10%;
+    background:   #ebeef5;
+
+}
+.h7{
+    color: #4454f3;
+    cursor: pointer;
+    position: relative;
+}
+.section6 h3 {
+    font-size: 20px;
+    font-weight:bold;
+}
+h6{
+    font-size: 90px;
+    position: relative;
+    cursor: pointer;
+}
+
+
