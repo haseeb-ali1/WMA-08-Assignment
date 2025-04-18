@@ -1,131 +1,132 @@
 import React, { useState, useEffect } from 'react';
-import './App.css'; // Assuming you have some CSS for styling
+import './App.css';
+import FacebookNavbar from './components/Nav';
 
-const FacebookPosts = () => {
+function App() {
+  return (
+    <div className="app">
+      <FacebookNavbar />
+      {/* Your other components */}
+    </div>
+  );
+}
+const SocialPost = () => {
   const [posts, setPosts] = useState([]);
+  const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [limit, setLimit] = useState(10); // Initial number of posts to load
-
+  const [expandedComments, setExpandedComments] = useState({});
+  const [loadmore, setLoadMore] = useState(3);
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(`https://dummyjson.com/posts?limit=${limit}`);
-        const data = await response.json();
-        
-        if (data && data.posts) {
-          setPosts(data.posts);
-        } else {
-          throw new Error('Invalid data structure');
-        }
+        setLoading(true);
+        const postsResponse = await fetch('https://dummyjson.com/posts');
+        if (!postsResponse.ok) throw new Error('Failed to fetch posts');
+        const postsData = await postsResponse.json();
+        const commentsResponse = await fetch('https://dummyjson.com/comments');
+        if (!commentsResponse.ok) throw new Error('Failed to fetch comments');
+        const commentsData = await commentsResponse.json();
+        const enhancedPosts = postsData.posts.map(post => {
+          const postComments = commentsData.comments
+            .filter((_, index) => index % 5 === post.id % 5)
+            .slice(0, Math.floor(Math.random() * 8) + 2); 
+          return {
+            ...post,
+            likes: Math.floor(Math.random() * 500),
+            views: Math.floor(Math.random() * 3000),
+            comments: postComments,
+            user: {
+              name: `User${post.userId}`,
+              avatar: `https://i.pravatar.cc/150?img=${post.userId}`
+            }
+          };
+        });
+        setPosts(enhancedPosts);
+        setComments(commentsData.comments);
+        setLoading(false);
       } catch (err) {
         setError(err.message);
-      } finally {
         setLoading(false);
       }
     };
-
-    fetchPosts();
-  }, [limit]);
-
-  const loadMorePosts = () => {
-    setLimit(prev => prev + 5); // Load 5 more posts
+    fetchData();
+  }, []);
+  const handleLike = (postId) => {
+    setPosts(posts.map(post =>
+      post.id === postId ? { ...post, likes: post.likes + 1 } : post
+    ));
   };
-
-  if (loading && posts.length === 0) {
-    return <div className="loading-spinner">Loading posts...</div>;
-  }
-
-  if (error) {
-    return <div className="error-message">Error: {error}</div>;
-  }
-
+  const toggleComments = (postId) => {
+    setExpandedComments(prev => ({
+      ...prev,
+      [postId]: !prev[postId]
+    }));
+  };
+  if (loading) return <div className="loading">Loading posts...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
   return (
-    <div className="facebook-posts-container">
-      {/* Create Post Box (similar to Facebook) */}
-      <div className="create-post-box">
-        <div className="post-input">
-          <img 
-            src="https://randomuser.me/api/portraits/men/1.jpg" 
-            alt="User" 
-            className="user-avatar"
-          />
-          <input 
-            type="text" 
-            placeholder="What's on your mind?" 
-            className="post-input-field"
-          />
-        </div>
-        <div className="post-options">
-          <button className="post-option">
-            <i className="photo-icon"></i> Photo/Video
-          </button>
-          <button className="post-option">
-            <i className="feeling-icon"></i> Feeling/Activity
-          </button>
-        </div>
-      </div>
-
-      {/* Posts List */}
-      {posts.map(post => (
+    <div className="app">
+      <FacebookNavbar />
+    <div className="social-feed">
+      {posts.slice(0, loadmore).map(post => (
         <div key={post.id} className="post-card">
-          {/* Post Header */}
           <div className="post-header">
-            <img 
-              src={`https://randomuser.me/api/portraits/${post.userId % 2 === 0 ? 'women' : 'men'}/${post.userId % 50}.jpg`}
-              alt="User" 
-              className="post-user-avatar"
-            />
-            <div className="post-user-info">
-              <span className="post-username">User {post.userId}</span>
-              <span className="post-time">2 hrs ago · <i className="privacy-icon"></i></span>
+            <div className="user-info">
+              <span className="user-name">{post.user.name}</span>
+              <span className="post-time">2 hrs ago</span>
             </div>
           </div>
-
-          {/* Post Content */}
           <div className="post-content">
             <p>{post.body}</p>
-            {post.tags && post.tags.length > 0 && (
+            {post.tags && (
               <div className="post-tags">
-                {post.tags.map((tag, index) => (
-                  <span key={index} className="tag">#{tag}</span>
+                {post.tags.map(tag => (
+                  <span key={tag} className="tag">#{tag}</span>
                 ))}
               </div>
             )}
           </div>
-
-          {/* Post Reactions */}
-          <div className="post-reactions">
-            <div className="reactions-count">
-              <span>👍 42</span>
-              <span>💬 12 comments</span>
-              <span>↗️ 3 shares</span>
+          <div className="post-stats">
+            <div className="stat">
+              <span>👍 {post.likes}</span>
+            </div>
+            <div className="stat">
+              <span>👁️ {post.views} views</span>
+            </div>
+            <div className="stat">
+              <span>💬 {post.comments.length} comments</span>
             </div>
           </div>
-
-          {/* Post Actions */}
           <div className="post-actions">
-            <button className="post-action">
-              <i className="like-icon"></i> Like
+            <button onClick={() => handleLike(post.id)}>Like</button>
+            <button onClick={() => toggleComments(post.id)}>
+              {expandedComments[post.id] ? 'Hide Comments' : 'Show Comments'}
             </button>
-            <button className="post-action">
-              <i className="comment-icon"></i> Comment
-            </button>
-            <button className="post-action">
-              <i className="share-icon"></i> Share
-            </button>
+            <button>Share</button>
           </div>
+          {expandedComments[post.id] && (
+            <div className="comments-section">
+              {post.comments.map(comment => (
+                <div key={comment.id} className="comment">
+                  <div className="comment-content">
+                    <p className="comment-text">{comment.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       ))}
-
-      {/* Load More Button */}
-      {posts.length > 0 && (
-        <button className="load-more-btn" onClick={loadMorePosts}>
-          Load More Posts
-        </button>
-      )}
+      <button
+        className="load-more"
+        onClick={() => setLoadMore(loadmore + 3)}
+        style={{ display: 'flex', justifySelf: 'center', margin: '20px', padding: '10px', backgroundColor: '#007BFF', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+        Load More
+      </button>
+    </div>
     </div>
   );
 };
 
-export default FacebookPosts;
+export default SocialPost;
